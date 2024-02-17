@@ -2,6 +2,9 @@ var bip39 = require('bip39')
 var hdkey = require('ethereumjs-wallet/hdkey')
 var util = require('ethereumjs-util')
 
+// var mnemonic = bip39.generateMnemonic()
+// console.log(mnemonic)
+
 // 生成助记词
 var mnemonic = "candy maple cake sugar pudding cream honey rich smooth crumble sweet treat"; // bip39.generateMnemonic()
 console.log("助记词："+ mnemonic );
