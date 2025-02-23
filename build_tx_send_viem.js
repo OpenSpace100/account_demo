@@ -10,13 +10,7 @@ async function sendTransactionExample() {
     const privateKey = "0x4b1d560fefb0dcfd9d0b27812dd87158119ff502d26f6b697f67cd31ae53b043"
     console.log('Generated Private Key:', privateKey)
 
-    // 2. 创建钱包客户端
-    const walletClient = createWalletClient({
-      chain: sepolia,
-      transport: http('https://eth-sepolia.public.blastapi.io') // 替换为你的RPC节点URL
-    })
-
-    // 3. 获取账户地址
+    // 推导账户
     const account = privateKeyToAccount(privateKey)
     const userAddress = account.address
     console.log('Account Address:', userAddress)
@@ -39,7 +33,7 @@ async function sendTransactionExample() {
     })
     console.log('Nonce:', nonce)
 
-    // 4. 构建交易参数
+    // 2. 构建交易参数
     const txParams = {
       account: account,
       to: '0xe74c813e3f545122e88A72FB1dF94052F93B808f', // 目标地址
@@ -50,15 +44,21 @@ async function sendTransactionExample() {
       maxFeePerGas: parseGwei('40'), // 最大总费用（基础费用+小费）
       maxPriorityFeePerGas: parseGwei('2'), // 最大小费
       
-      // 普通交易 - gas limit 
-      gas: 21000n,
+      gas: 21000n,   // 普通交易 - gas limit 
       nonce: nonce,
     }
 
-    // 5. 估算gas（可选）
+    // 估算gas（可选）
     const gasEstimate = await publicClient.estimateGas(txParams)
     txParams.gas = gasEstimate
 
+
+  // 创建钱包客户端
+    const walletClient = createWalletClient({
+      account: account,
+      chain: sepolia,
+      transport: http('https://eth-sepolia.public.blastapi.io') // 替换为你的RPC节点URL
+    })
 
     // 方式 1 ： 
     // const txHash = await walletClient.sendTransaction(txParams)
@@ -68,7 +68,7 @@ async function sendTransactionExample() {
     const signedTx = await walletClient.signTransaction(txParams)
     console.log('Signed Transaction:', signedTx)
 
-    // 7. 发送交易
+    // 7. 发送交易  eth_sendRawTransaction
     const txHash = await publicClient.sendRawTransaction({
       serializedTransaction: signedTx
     })

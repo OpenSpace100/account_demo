@@ -16,3 +16,8 @@ node create_by_raw.js
 ```
 node create_by_mnemonic.js
 ```
+
+3. build tx and send by viem，注意：package.json 中添加 "type": "module",
+```
+node build_tx_send_viem.js
+```
