@@ -1,5 +1,10 @@
 # Readme
 
+## install
+```
+npm install
+```
+
 1. create eth account by random private key 
 
 ```
