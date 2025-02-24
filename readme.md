@@ -1,6 +1,13 @@
 # Readme
 
 ## install
+
+Node.js 18.17.1:
+```
+nvm install 18.17.1
+nvm use 18.17.1
+```
+
 ```
 npm install
 ```
