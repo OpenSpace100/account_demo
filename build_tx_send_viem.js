@@ -3,6 +3,7 @@ import { generatePrivateKey, privateKeyToAccount } from 'viem/accounts'
 import { sepolia } from 'viem/chains'
 import { createPublicClient } from 'viem'
 
+// 本文件转移到： https://github.com/lbc-team/hello_viem/blob/main/demo/src/build_raw_tx.ts
 async function sendTransactionExample() {
   try {
     // 1. 生成私钥
@@ -39,6 +40,7 @@ async function sendTransactionExample() {
       to: '0xe74c813e3f545122e88A72FB1dF94052F93B808f', // 目标地址
       value: parseEther('0.0001'), // 发送金额（ETH）
       chainId: sepolia.id,
+      type: 'eip1559',
       
       // EIP-1559 交易
       maxFeePerGas: parseGwei('40'), // 最大总费用（基础费用+小费）
@@ -46,6 +48,7 @@ async function sendTransactionExample() {
       
       gas: 21000n,   // 普通交易 - gas limit 
       nonce: nonce,
+ 
     }
 
     // 估算gas（可选）
